@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>صدقة جارية عن روح الأستاذ الششتاوي عبدالعظيم | إذاعة القرآن الكريم</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="icon" href="favicon.png" type="image/png">
+
+<link rel="manifest" href="data:application/manifest+json,{
+  \"name\": \"صدقة جارية عن روح الأستاذ الششتاوي عبدالعظيم\",
+  \"short_name\": \"صدقة جارية\",
+  \"description\": \"إذاعة القرآن الكريم صدقة جارية عن روح الأستاذ الششتاوي عبدالعظيم\",
+  \"start_url\": \"/\",
+  \"display\": \"standalone\",
+  \"background_color\": \"#0f2027\",
+  \"theme_color\": \"#0b2e2f\",
+  \"icons\": [{\"src\": \"favicon.png\", \"sizes\": \"64x64\", \"type\": \"image/png\"}]
+}">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-91HP8NVXK5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-91HP8NVXK5');
+</script>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Tahoma, Arial;
+    background:linear-gradient(to bottom,#0f2027,#203a43,#2c5364);
+    color:white;
+    padding:15px;
+    padding-top:80px;
+}
+
+/* الشريط العلوي */
+
+.top-banner{
+    position:fixed;
+    top:0;
+    right:0;
+    width:100%;
+    background:linear-gradient(90deg,#ffeb3b,#4caf50);
+    color:#000;
+    text-align:center;
+    padding:12px 5px;
+    font-size:18px;
+    font-weight:bold;
+    z-index:999;
+    box-shadow:0 3px 8px rgba(0,0,0,0.3);
+    border-bottom-left-radius:10px;
+    border-bottom-right-radius:10px;
+}
+
+/* صندوق الإذاعة */
+
+.radio-box{
+    max-width:420px;
+    margin:15px auto;
+    background:rgba(0,0,0,0.5);
+    padding:20px;
+    border-radius:18px;
+    text-align:center;
+}
+
+.creator{
+    font-size:17px;
+    color:#ffd700;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.radio-icon{
+    font-size:55px;
+    margin-bottom:8px;
+}
+
+h1{
+    font-size:24px;
+    margin-bottom:6px;
+}
+
+p{
+    font-size:15px;
+    margin-bottom:10px;
+}
+
+/* زر التشغيل */
+
+button{
+    width:100%;
+    padding:14px;
+    font-size:18px;
+    border:none;
+    border-radius:15px;
+    background:#1abc9c;
+    color:#000;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button:active{
+    background:#16a085;
+}
+
+/* الأدعية والآيات */
+
+.box{
+    margin:8px auto;
+    padding:10px;
+    max-width:600px;
+    text-align:center;
+    font-size:17px;
+    border-radius:12px;
+    font-weight:bold;
+    opacity:0;
+    transition:opacity 1.5s ease-in-out;
+}
+
+#duaa{
+    background:#ffffff;
+    color:#2e7d32;
+}
+
+#ayah{
+    background:#f1f8e9;
+    color:#2e7d32;
+}
+
+/* رسالة فيسبوك */
+
+#fbNotice{
+    display:none;
+    margin-top:10px;
+    padding:8px;
+    background:#fff3cd;
+    color:#000;
+    border-radius:10px;
+    font-size:14px;
+}
+
+#fbNotice a{
+    display:block;
+    margin-top:4px;
+    padding:4px;
+    background:#1abc9c;
+    color:#000;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+#copyBtn{
+    margin-top:4px;
+    padding:5px 10px;
+    background:#1abc9c;
+    color:#000;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* المشاركة */
+
+.bottom-note{
+    margin:10px auto;
+    padding:10px;
+    max-width:500px;
+    background:#f1f8e9;
+    border-radius:8px;
+    text-align:center;
+    font-size:17px;
+    color:#2e7d32;
+    font-weight:bold;
+}
+
+.bottom-note button{
+    margin-top:8px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- الشريط العلوي -->
+
+<div class="top-banner">
+🌿 هذا العمل صدقة جارية عن روح الأستاذ الششتاوي عبدالعظيم — نسألكم الدعاء
+</div>
+
+
+<!-- صندوق الإذاعة -->
+
+<div class="radio-box">
+
+    <div class="creator">
+        by Mahmoud Helal
+    </div>
+
+    <div class="radio-icon">
+        📻
+    </div>
+
+    <h1>
+        إذاعة القرآن الكريم
+    </h1>
+
+    <p style="color:#c8e6c9;font-weight:bold;">
+        نسأل الله أن يجعلها في ميزان حسناته
+    </p>
+
+    <button id="playBtn" onclick="togglePlay()">
+        ▶️ تشغيل الإذاعة
+    </button>
+
+    <audio id="radio" preload="none" playsinline></audio>
+
+
+    <!-- رسالة فيسبوك -->
+
+    <div id="fbNotice">
+
+        🔊 إذا لم يعمل الصوت داخل فيسبوك
+
+        🌐 افتح الرابط في أي متصفح:
+
+        <a
+        id="fbLink"
+        href="https://mahmoudhelal310-dotcom.github.io/quran-radio/"
+        target="_blank">
+
+        https://mahmoudhelal310-dotcom.github.io/quran-radio/
+
+        </a>
+
+        <button id="copyBtn">
+            نسخ الرابط
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- الدعاء -->
+
+<div id="duaa" class="box"></div>
+
+
+<!-- الآية -->
+
+<div id="ayah" class="box"></div>
+
+
+<!-- المشاركة -->
+
+<div class="bottom-note">
+
+🌿 كل استماعك للقرآن صدقة جارية — شارك الرابط لتشارك الأجر
+
+<br>
+
+<button id="shareBtn">
+    📤 مشاركة الرابط
+</button>
+
+</div>
+
+
+<script>
+
+/* =========================
+   تشغيل الإذاعة
+========================= */
+
+let playing = false;
+
+const radio = document.getElementById("radio");
+
+const btn = document.getElementById("playBtn");
+
+const notice = document.getElementById("fbNotice");
+
+
+function togglePlay(){
+
+    if(!playing){
+
+        if(!radio.src){
+
+            radio.src =
+            "https://stream.radiojar.com/8s5u5tpdtwzuv";
+
+        }
+
+        radio.load();
+
+        radio.play()
+
+        .then(()=>{
+
+            notice.style.display="none";
+
+        })
+
+        .catch(()=>{
+
+            notice.style.display="block";
+
+        });
+
+        btn.innerHTML =
+        "⏸️ إيقاف الإذاعة";
+
+        playing = true;
+
+    }
+
+    else{
+
+        radio.pause();
+
+        btn.innerHTML =
+        "▶️ تشغيل الإذاعة";
+
+        playing = false;
+
+    }
+
+}
+
+
+/* =========================
+   نسخ الرابط
+========================= */
+
+document.getElementById("copyBtn").onclick = () => {
+
+    navigator.clipboard.writeText(
+        document.getElementById("fbLink").href
+    )
+
+    .then(()=>{
+
+        document.getElementById("copyBtn").innerText =
+        "تم النسخ ✅";
+
+    });
+
+};
+
+
+/* =========================
+   الأدعية
+========================= */
+
+const duaas = [
+
+"🤲 اللهم اغفر له وارحمه وعافه واعفُ عنه",
+
+"🤲 اللهم اجعل قبره روضة من رياض الجنة",
+
+"🤲 اللهم آنس وحشته ونوّر قبره",
+
+"🤲 اللهم ارحمه رحمةً واسعة واغفر له ذنوبه",
+
+"🤲 اللهم ارفع درجته في المهديين واخلفه في عقبه في الغابرين",
+
+"🤲 اللهم اجعل قبره نورًا وضياءً وسعةً وطمأنينة",
+
+"🤲 اللهم اجعل القرآن شفيعًا له يوم القيامة",
+
+"🤲 اللهم اجعل هذا العمل صدقة جارية عنه",
+
+"🤲 اللهم اجعل ما يُقرأ من القرآن في ميزان حسناته",
+
+"🤲 اللهم أكرم نزله ووسّع مدخله",
+
+"🤲 اللهم اغسله بالماء والثلج والبرد ونقّه من الخطايا",
+
+"🤲 اللهم اجعل الجنة داره وقراره",
+
+"🤲 اللهم ارزقه الفردوس الأعلى من الجنة",
+
+"🤲 اللهم حرّم وجهه على النار وأدخله الجنة برحمتك",
+
+"🤲 اللهم اجمعه مع النبيين والصديقين والشهداء والصالحين",
+
+"🤲 اللهم اجعل قبره خير منزل بعد الدنيا",
+
+"🤲 اللهم اجعل له نورًا عن يمينه وعن شماله ومن فوقه ومن تحته",
+
+"🤲 اللهم اجعل الملائكة تحفّه برحمتك",
+
+"🤲 اللهم ثبّته عند السؤال",
+
+"🤲 اللهم اجعل آخرته خيرًا له من دنياه",
+
+"🤲 اللهم اكتب له بكل حرف من القرآن حسنة",
+
+"🤲 اللهم اجعل حسناته مضاعفة وذنوبه مغفورة",
+
+"🤲 اللهم اجعل له نصيبًا من رحمتك وعفوك ورضوانك",
+
+"🤲 اللهم اجعل ذكراه طيبة وأجره باقيًا",
+
+"🤲 اللهم اجعل كل من يستمع إلى القرآن هنا سببًا في زيادة حسناته",
+
+"🤲 اللهم اجمعنا به في جنات النعيم"
+
+];
+
+
+let d = 0;
+
+const duaaDiv =
+document.getElementById("duaa");
+
+
+function changeDuaa(){
+
+    duaaDiv.style.opacity = 0;
+
+    setTimeout(()=>{
+
+        duaaDiv.innerHTML =
+        duaas[d];
+
+        duaaDiv.style.opacity = 1;
+
+        d =
+        (d + 1) % duaas.length;
+
+    },1500);
+
+}
+
+
+/* =========================
+   الآيات
+========================= */
+
+const ayat = [
+
+"﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾",
+
+"﴿ إِنَّ مَعَ الْعُسْرِ يُسْرًا ﴾",
+
+"﴿ وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ ﴾",
+
+"﴿ إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ ﴾",
+
+"﴿ كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ ﴾",
+
+"﴿ فَاذْكُرُونِي أَذْكُرْكُمْ ﴾",
+
+"﴿ وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا ﴾",
+
+"﴿ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ ﴾",
+
+"﴿ وَقُل رَّبِّ اغْفِرْ وَارْحَمْ وَأَنتَ خَيْرُ الرَّاحِمِينَ ﴾",
+
+"﴿ وَمَن يَعْمَلْ مِنَ الصَّالِحَاتِ وَهُوَ مُؤْمِنٌ فَلَا يَخَافُ ظُلْمًا وَلَا هَضْمًا ﴾"
+
+];
+
+
+let a = 0;
+
+const ayahDiv =
+document.getElementById("ayah");
+
+
+function changeAyah(){
+
+    ayahDiv.style.opacity = 0;
+
+    setTimeout(()=>{
+
+        ayahDiv.innerHTML =
+        "📖 " + ayat[a];
+
+        ayahDiv.style.opacity = 1;
+
+        a =
+        (a + 1) % ayat.length;
+
+    },1500);
+
+}
+
+
+/* =========================
+   زر المشاركة
+========================= */
+
+const shareBtn =
+document.getElementById("shareBtn");
+
+
+const shareLink =
+"https://mahmoudhelal310-dotcom.github.io/quran-radio/";
+
+
+shareBtn.onclick = () => {
+
+    if(navigator.share){
+
+        navigator.share({
+
+            title:
+            "صدقة جارية عن روح الأستاذ الششتاوي عبدالعظيم",
+
+            text:
+            "🌿 كل استماعك للقرآن صدقة جارية — شارك الرابط لتشارك الأجر",
+
+            url:
+            shareLink
+
+        })
+
+        .catch((err)=>{
+            console.log("مشاركة فشلت",err);
+        });
+
+    }
+
+    else{
+
+        navigator.clipboard.writeText(shareLink)
+
+        .then(()=>{
+
+            alert(
+            "تم نسخ الرابط ✅\nيمكنك مشاركته مع من تحب"
+            );
+
+        })
+
+        .catch(()=>{
+
+            alert(
+            "فشل نسخ الرابط، انسخه يدويًا"
+            );
+
+        });
+
+    }
+
+};
+
+
+/* =========================
+   بدء الأدعية والآيات
+========================= */
+
+changeDuaa();
+
+changeAyah();
+
+
+/* تغيير الدعاء كل 12 ثانية */
+
+setInterval(
+    changeDuaa,
+    12000
+);
+
+
+/* تغيير الآية كل 10 ثوانٍ */
+
+setInterval(
+    changeAyah,
+    10000
+);
+
+
+/* =========================
+   Service Worker
+========================= */
+
+if("serviceWorker" in navigator){
+
+    navigator.serviceWorker.register(
+        "service-worker.js"
+    )
+
+    .then(()=>{
+        console.log(
+        "Service Worker registered"
+        );
+    })
+
+    .catch((err)=>{
+        console.log(
+        "Service Worker failed",
+        err
+        );
+    });
+
+}
+
+</script>
+
+</body>
+</html>
