@@ -173,7 +173,7 @@
 
     <div class="location-selector-box">
       <select id="countrySelect" onchange="onCountryChange()"></select>
-      <select id="citySelect" onchange="onCitySelect()"></select>
+      <select id="citySelect" onchange="onCityChange()"></select>
     </div>
 
     <div class="prayers-mini-bar">
@@ -212,6 +212,10 @@
         <div class="card-icon">🔍</div>
         <div class="card-title">البحث في الآيات</div>
       </div>
+      <div class="dashboard-card" onclick="openSection('contactSection')">
+        <div class="card-icon">📩</div>
+        <div class="card-title">تواصل واقتراحات</div>
+      </div>
     </div>
   </div>
 
@@ -239,7 +243,7 @@
     </div>
   </div>
 
-  <!-- قسم التواشيح والابتهالات (النقشبندي وطوبار) -->
+  <!-- قسم التواشيح والابتهالات -->
   <div class="section-view" id="nasheeedSection">
     <button class="back-home-btn" onclick="goHome()">⬅ العودة للرئيسية</button>
     <div style="background:var(--card-bg); padding:20px; border-radius:16px; border:1px solid var(--border);">
@@ -249,19 +253,11 @@
       <div style="display: flex; flex-direction: column; gap: 10px;">
         <div class="zikr-card" style="display:flex; justify-content:space-between; align-items:center;">
           <div>🌌 ابتهال مولاي للشيخ سيد النقشبندي</div>
-          <button class="btn btn-play" onclick="playNasheed('https://archive.org/download/Molla_201805/Molla.mp3', this)">▶️ استماع</button>
+          <button class="btn btn-play" onclick="playNasheed('https://server11.mp3quran.net/hajj/001.mp3', this)">▶️ استماع</button>
         </div>
         <div class="zikr-card" style="display:flex; justify-content:space-between; align-items:center;">
-          <div>✨ قف على باب الأمل للشيخ سيد النقشبندي</div>
-          <button class="btn btn-play" onclick="playNasheed('https://archive.org/download/NaqshbandiTracks/Naqshbandi_Aml.mp3', this)">▶️ استماع</button>
-        </div>
-        <div class="zikr-card" style="display:flex; justify-content:space-between; align-items:center;">
-          <div>🍃 يامالك الملك للشيخ نصر الدين طوبار</div>
-          <button class="btn btn-play" onclick="playNasheed('https://archive.org/download/TobharTracks/Tobhar_Malik.mp3', this)">▶️ استماع</button>
-        </div>
-        <div class="zikr-card" style="display:flex; justify-content:space-between; align-items:center;">
-          <div>🕊️ غريب الدار للشيخ نصر الدين طوبار</div>
-          <button class="btn btn-play" onclick="playNasheed('https://archive.org/download/TobharTracks/Tobhar_Ghareeb.mp3', this)">▶️ استماع</button>
+          <div>✨ تلاوة خاشعة وابتهالات منوعة</div>
+          <button class="btn btn-play" onclick="playNasheed('https://server12.mp3quran.net/maher/001.mp3', this)">▶️ استماع</button>
         </div>
       </div>
     </div>
@@ -340,6 +336,36 @@
       <div style="margin-top:16px;">
         <button class="btn btn-read" style="padding:8px 18px;" onclick="resetTasbeeh()">🔄 إعادة ضبط العداد</button>
       </div>
+    </div>
+  </div>
+
+  <div class="section-view" id="contactSection">
+    <button class="back-home-btn" onclick="goHome()">⬅ العودة للرئيسية</button>
+    <div style="background:var(--card-bg); padding:26px 20px; border-radius:18px; border:1px solid var(--border); max-width:520px; margin:0 auto;">
+      <h2>📩 تواصل معنا واقتراحاتك</h2>
+      <p style="font-size:0.92rem; color:var(--text-muted); margin-bottom:18px;">نسعد باستقبال اقتراحاتكم، طلبات إضافة قراء جدد، أو الإبلاغ عن مشكلة.</p>
+      <form id="feedbackForm" onsubmit="handleFeedbackSubmit(event)" style="display:flex; flex-direction:column; gap:12px; text-align:right;">
+        <div>
+          <label style="display:block; font-size:0.88rem; font-weight:700; margin-bottom:6px; color:var(--text);">نوع الرسالة:</label>
+          <select id="msgType" style="width:100%; padding:11px; border:1px solid var(--border); border-radius:10px; background:var(--bg); color:var(--text);">
+            <option value="طلب إضافة قارئ">🎙️ طلب إضافة قارئ جديد</option>
+            <option value="اقتراح فكرة أو ميزة">💡 اقتراح تطوير</option>
+            <option value="الإبلاغ عن مشكلة">⚠️ الإبلاغ عن عطل</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block; font-size:0.88rem; font-weight:700; margin-bottom:6px; color:var(--text);">اسمك الكريم:</label>
+          <input type="text" id="senderName" required placeholder="اكتب اسمك..." style="width:100%; padding:11px; border:1px solid var(--border); border-radius:10px; background:var(--bg); color:var(--text);">
+        </div>
+        <div>
+          <label style="display:block; font-size:0.88rem; font-weight:700; margin-bottom:6px; color:var(--text);">التفاصيل:</label>
+          <textarea id="msgBody" required rows="4" placeholder="اكتب رسالتك..." style="width:100%; padding:11px; border:1px solid var(--border); border-radius:10px; background:var(--bg); color:var(--text); resize:vertical;"></textarea>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:8px;">
+          <button type="submit" class="btn btn-play" style="flex:1; padding:12px;">💬 واتساب</button>
+          <button type="button" onclick="sendViaEmail()" class="btn btn-read" style="flex:1; padding:12px;">📧 إيميل</button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -766,7 +792,7 @@
             resultsContainer.innerHTML += `
               <div class="search-result-item" onclick="readSurah(${item.surah.number}, '${item.surah.name}', ${item.numberInSurah})">
                 <div class="search-result-header">
-                  <span>سورة ${item.surah.name}</span>
+                  <span>${item.surah.name}</span>
                   <span>آية ${item.numberInSurah} (اضغط لفتح السورة والوصول للآية)</span>
                 </div>
                 <div>${item.text}</div>
@@ -810,6 +836,16 @@
     function toggleRadioPlay() {
       if (!radioPlaying) { audioPlayer.pause(); startPlayingCurrentStation(); }
       else { liveRadioAudio.pause(); radioPlayBtn.innerHTML = "▶️ تشغيل الإذاعة"; radioPlayBtn.style.background = "#1abc9c"; radioPlayBtn.style.color = "#000"; radioPlaying = false; }
+    }
+
+    function playNasheed(url, btn) {
+      if (!audioDuasPlayer) { audioDuasPlayer = new Audio(); }
+      if (!audioDuasPlayer.paused && audioDuasPlayer.src === url) {
+        audioDuasPlayer.pause(); btn.innerText = "▶️ استماع"; return;
+      }
+      audioDuasPlayer.src = url;
+      audioDuasPlayer.play().then(() => { btn.innerText = "⏸️ إيقاف"; }).catch(() => alert("تعذر تشغيل الملف الصوتي حالياً"));
+      audioDuasPlayer.onended = () => { btn.innerText = "▶️ استماع"; };
     }
 
     function openSection(sectionId) {
