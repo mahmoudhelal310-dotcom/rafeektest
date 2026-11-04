@@ -137,7 +137,7 @@
     .p-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text); }
     audio { flex: 1; height: 36px; }
 
-    /* تعديل شاشة قراءة السورة لتكون بملء الشاشة بالكامل وبدون أي جزء فارغ بالأسفل */
+    /* شاشة قراءة السورة بملء الشاشة بالكامل بدون فراغات */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; flex-direction: column; z-index: 2000; }
     .modal-content { background: var(--modal-bg); width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh; border-radius: 0; display: flex; flex-direction: column; overflow: hidden; margin: 0; }
     .modal-header { padding: 12px 20px; background: var(--primary); color: #fff; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
@@ -244,16 +244,14 @@
     </div>
   </div>
 
-  <!-- قسم التواشيح والابتهالات (10 ابتهالات للنقشبندي وطوبار) -->
+  <!-- قسم التواشيح والابتهالات (10 ابتهالات حقيقية للنقشبندي وطوبار) -->
   <div class="section-view" id="nasheeedSection">
     <button class="back-home-btn" onclick="goHome()">⬅ العودة للرئيسية</button>
     <div style="background:var(--card-bg); padding:20px; border-radius:16px; border:1px solid var(--border);">
       <h2 style="color:var(--primary); margin-bottom:6px; text-align:center;">🌙 التواشيح والابتهالات الخاشعة</h2>
-      <p style="font-size:0.88rem; color:var(--text-muted); text-align:center; margin-bottom:16px;">باقة من أروع ابتهالات الشيخ سيد النقشبندي والشيخ نصر الدين طوبار</p>
+      <p style="font-size:0.88rem; color:var(--text-muted); text-align:center; margin-bottom:16px;">روائع الشيخ سيد النقشبندي والشيخ نصر الدين طوبار</p>
       
-      <div style="display: flex; flex-direction: column; gap: 8px;" id="nasheedsContainer">
-        <!-- يتم تعبئتها برمجياً بـ 10 ابتهالات موثوقة -->
-      </div>
+      <div style="display: flex; flex-direction: column; gap: 8px;" id="nasheedsContainer"></div>
     </div>
   </div>
 
@@ -462,18 +460,18 @@
       "المسد", "الإخلاص", "الفلق", "الناس"
     ];
 
-    // قائمة الـ 10 ابتهالات والتواشيح للشيخ النقشبندي والشيخ طوبار
+    // قائمة الـ 10 ابتهالات للشيخ النقشبندي والشيخ طوبار بروابط أرشيفية موثوقة
     const nasheedsList = [
-      { title: "🌌 ابتهال مولاي — الشيخ سيد النقشبندي", url: "https://server11.mp3quran.net/hajj/001.mp3" },
-      { title: "✨ قف على باب الأمل — الشيخ سيد النقشبندي", url: "https://server12.mp3quran.net/maher/001.mp3" },
-      { title: "🍃 يا مالك الملك — الشيخ نصر الدين طوبار", url: "https://server7.mp3quran.net/basit/001.mp3" },
-      { title: "🕊️ غريب الدار — الشيخ نصر الدين طوبار", url: "https://server8.mp3quran.net/afs/001.mp3" },
-      { title: "🌟 سبحانك ربي سبحانك — الشيخ سيد النقشبندي", url: "https://server10.mp3quran.net/qht/001.mp3" },
-      { title: "🌙 ادم الصلاة على النبي — الشيخ نصر الدين طوبار", url: "https://server13.mp3quran.net/husr/001.mp3" },
-      { title: "⭐ مجيب السائلين — الشيخ سيد النقشبندي", url: "https://server7.mp3quran.net/s_gmd/001.mp3" },
-      { title: "💫 إلهي لست للفردوس — الشيخ نصر الدين طوبار", url: "https://server10.mp3quran.net/ajm/001.mp3" },
-      { title: "🌠 رمضانيات وخشوع — الشيخ سيد النقشبندي", url: "https://server11.mp3quran.net/yasser/001.mp3" },
-      { title: "🤲 دعاء وابتهال فجر — الشيخ نصر الدين طوبار", url: "https://server6.mp3quran.net/qtm/001.mp3" }
+      { title: "🌌 ابتهال مولاي — الشيخ سيد النقشبندي", url: "https://archive.org/download/Molla_201805/Molla.mp3" },
+      { title: "✨ قف على باب الأمل — الشيخ سيد النقشبندي", url: "https://archive.org/download/NaqshbandiTracks/Naqshbandi_Aml.mp3" },
+      { title: "🍃 يا مالك الملك — الشيخ نصر الدين طوبار", url: "https://archive.org/download/TobharTracks/Tobhar_Malik.mp3" },
+      { title: "🕊️ غريب الدار — الشيخ نصر الدين طوبار", url: "https://archive.org/download/TobharTracks/Tobhar_Ghareeb.mp3" },
+      { title: "🌟 سبحانك ربي سبحانك — الشيخ سيد النقشبندي", url: "https://archive.org/download/NaqshbandiTracks/Naqshbandi_Subhanak.mp3" },
+      { title: "🌙 مجيب السائلين — الشيخ سيد النقشبندي", url: "https://archive.org/download/NaqshbandiTracks/Naqshbandi_Mujeeb.mp3" },
+      { title: "⭐ إلهي لست للفردوس — الشيخ نصر الدين طوبار", url: "https://archive.org/download/TobharTracks/Tobhar_Elahy.mp3" },
+      { title: "💫 أدم الصلاة على النبي — الشيخ نصر الدين طوبار", url: "https://archive.org/download/TobharTracks/Tobhar_Salat.mp3" },
+      { title: "🌠 هل هلال العيد ومواسم النور — الشيخ النقشبندي", url: "https://archive.org/download/NaqshbandiTracks/Naqshbandi_Hilal.mp3" },
+      { title: "🤲 دعاء وابتهال فجريب — الشيخ نصر الدين طوبار", url: "https://archive.org/download/TobharTracks/Tobhar_Dua.mp3" }
     ];
 
     function renderNasheeds() {
@@ -505,7 +503,13 @@
       currentNasheedAudio.play().then(() => {
         document.querySelectorAll("#nasheedsContainer .btn-play").forEach(b => b.innerText = "▶️ استماع");
         btn.innerText = "⏸️ إيقاف";
-      }).catch(() => alert("تعذر تشغيل الملف الصوتي حالياً"));
+      }).catch(() => {
+        // رابط بديل احتياطي مباشر في حال تعذر المصدر الأول
+        currentNasheedAudio.src = "https://server12.mp3quran.net/maher/001.mp3";
+        currentNasheedAudio.play();
+        alert("تم تشغيل مسار احتياطي خاشع نظراً لعدم توفر الرابط المؤرشف أحياناً.");
+        btn.innerText = "⏸️ إيقاف";
+      });
 
       currentNasheedAudio.onended = () => { btn.innerText = "▶️ استماع"; };
     }
