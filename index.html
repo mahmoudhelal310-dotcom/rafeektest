@@ -244,7 +244,7 @@
     </div>
   </div>
 
-  <!-- قسم التواشيح والابتهالات (يعمل من ملفك المرفوع على جيت هب مباشرة) -->
+  <!-- قسم التواشيح والابتهالات -->
   <div class="section-view" id="nasheeedSection">
     <button class="back-home-btn" onclick="goHome()">⬅ العودة للرئيسية</button>
     <div style="background:var(--card-bg); padding:20px; border-radius:16px; border:1px solid var(--border);">
@@ -460,9 +460,9 @@
       "المسد", "الإخلاص", "الفلق", "الناس"
     ];
 
-    // ربط ملف الابتهال المرفوع مباشرة في مستودع GitHub الخاص بك
+    // ربط ملف الابتهال المرفوع مباشرة في مستودع GitHub الخاص بك بالاسم الصحيح
     const nasheedsList = [
-      { title: "🎙️ شريط للشيخ نصر الدين طوبار (من أروع ما قدم)", url: "شريط للشيخ نصر الدين طوبار من اروع ما قدم جوده عاليه.mp3" }
+      { title: "🎙️ ابتهال للشيخ نصر الدين طوبار (جودة عالية)", url: "شريط للشيخ نصر الدين طوبار من اروع ما قدم جوده عاليه.mp3" }
     ];
 
     function renderNasheeds() {
@@ -484,7 +484,7 @@
       if (audioPlayer && !audioPlayer.paused) audioPlayer.pause();
       if (liveRadioAudio && !liveRadioAudio.paused) liveRadioAudio.pause();
 
-      if (!currentNasheedAudio.paused && currentNasheedAudio.src.endsWith(url)) {
+      if (!currentNasheedAudio.paused && currentNasheedAudio.src.includes(encodeURI(url))) {
         currentNasheedAudio.pause();
         btn.innerText = "▶️ استماع";
         return;
@@ -494,7 +494,7 @@
       currentNasheedAudio.play().then(() => {
         document.querySelectorAll("#nasheedsContainer .btn-play").forEach(b => b.innerText = "▶️ استماع");
         btn.innerText = "⏸️ إيقاف";
-      }).catch(() => alert("تعذر تشغيل ملف الابتهال حالياً، تأكد من صحة اسم الملف."));
+      }).catch(() => alert("تعذر تشغيل ملف الابتهال حالياً، تأكد من وجود الملف في نفس مجلد الـ index."));
 
       currentNasheedAudio.onended = () => { btn.innerText = "▶️ استماع"; };
     }
