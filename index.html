@@ -197,13 +197,9 @@
         <div class="card-icon">🤲</div>
         <div class="card-title">حصن المسلم والأذكار</div>
       </div>
-      <div class="dashboard-card" onclick="openSection('nasheeedSection')">
-        <div class="card-icon">🎙️</div>
-        <div class="card-title">إذاعة التواشيح والابتهالات</div>
-      </div>
       <div class="dashboard-card" onclick="openSection('radioSection')">
         <div class="card-icon">📻</div>
-        <div class="card-title">إذاعة القرآن الكريم</div>
+        <div class="card-title">إذاعات القرآن والابتهالات</div>
       </div>
       <div class="dashboard-card" onclick="openSection('tasbeehSection')">
         <div class="card-icon">📿</div>
@@ -244,20 +240,23 @@
     </div>
   </div>
 
-  <!-- قسم إذاعة التواشيح والابتهالات الرسمية (يعمل بشكل حي ومباشر ومستقر تماماً) -->
-  <div class="section-view" id="nasheeedSection">
+  <!-- قسم الإذاعات المباشرة (يشمل إذاعة القران، تلاوات منوعة، إذاعة الابتهالات والتواشيح، والرقیه الشرعيه) -->
+  <div class="section-view" id="radioSection">
     <button class="back-home-btn" onclick="goHome()">⬅ العودة للرئيسية</button>
-    <div style="background:var(--card-bg); padding:24px 20px; border-radius:18px; text-align:center; border:1px solid var(--border); max-width:480px; margin:0 auto;">
-      <div style="font-size:48px; margin-bottom:10px;">🎙️</div>
-      <h2 style="color:var(--text); margin-bottom:6px;">إذاعة التواشيح والابتهالات</h2>
-      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px;">استمع لأجمل ابتهالات وتواشيح الشيخ النقشبندي وطوبار طوال اليوم</p>
-      
-      <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
-        <div style="font-size: 0.95rem; font-weight: bold; color: var(--primary); margin-bottom: 10px;">✨ بث حي ومباشر للابتهالات والأدعية</div>
-        <button class="btn btn-play" id="nasheedPlayBtn" onclick="toggleNasheedRadio()" style="width:100%; padding:14px; border-radius:12px; font-size:1.05rem;">▶️ تشغيل بث الابتهالات</button>
-        <audio id="nasheedRadioAudio" preload="none" src="https://backup.qurango.net/radio/tarateel" playsinline></audio>
-      </div>
-      <p style="font-size: 0.82rem; color: var(--text-muted);">قريباً سيتم إضافة مكتبة ملفات صوتية منفصلة للابتهالات الخاصة بناءً على رغبتكم.</p>
+    <div style="background:var(--card-bg); padding:24px 18px; border-radius:18px; text-align:center; border:1px solid var(--border); max-width:440px; margin:0 auto;">
+      <div style="font-size:0.9rem; color:var(--accent); font-weight:bold; margin-bottom:10px;">by Mahmoud Helal</div>
+      <div style="font-size:48px; margin-bottom:10px;">📻</div>
+      <h2 style="color:var(--text);">الإذاعات والمحطات المباشرة</h2>
+      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:14px;">بث حي ومباشر على مدار الساعة</p>
+      <select id="radioStationSelect" onchange="changeRadioStation()" style="width:100%; padding:11px; border-radius:10px; border:1px solid var(--border); background:var(--bg); color:var(--text); margin-bottom:14px; outline:none; cursor:pointer;">
+        <option value="cairo" selected>📻 إذاعة القرآن الكريم من القاهرة</option>
+        <option value="nasheeed">🎙️ إذاعة التواشيح والابتهالات الدينية</option>
+        <option value="tarateel">🎧 تلاوات خاشعة منوعة</option>
+        <option value="roqiah">🛡️ إذاعة الرقية الشرعية</option>
+      </select>
+      <button class="btn btn-play" id="radioPlayBtn" onclick="toggleRadioPlay()" style="width:100%; padding:14px; border-radius:12px; font-size:1.05rem;">▶️ تشغيل الإذاعة</button>
+      <div id="radioStatusText" style="font-size:0.8rem; color:var(--text-muted); margin-top:8px; display:none;"></div>
+      <audio id="liveRadioAudio" preload="none" playsinline></audio>
     </div>
   </div>
 
@@ -271,24 +270,6 @@
       <div id="ayahSearchResults">
         <div style="text-align: center; color: var(--text-muted); padding: 25px;">اكتب كلمة أو جملة واضغط "بحث".</div>
       </div>
-    </div>
-  </div>
-
-  <div class="section-view" id="radioSection">
-    <button class="back-home-btn" onclick="goHome()">⬅ العودة للرئيسية</button>
-    <div style="background:var(--card-bg); padding:24px 18px; border-radius:18px; text-align:center; border:1px solid var(--border); max-width:440px; margin:0 auto;">
-      <div style="font-size:0.9rem; color:var(--accent); font-weight:bold; margin-bottom:10px;">by Mahmoud Helal</div>
-      <div style="font-size:48px; margin-bottom:10px;">📻</div>
-      <h2 style="color:var(--text);">إذاعة القرآن الكريم</h2>
-      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:14px;">بث مباشر لتلاوات عطرة 24 ساعة</p>
-      <select id="radioStationSelect" onchange="changeRadioStation()" style="width:100%; padding:11px; border-radius:10px; border:1px solid var(--border); background:var(--bg); color:var(--text); margin-bottom:14px; outline:none; cursor:pointer;">
-        <option value="cairo" selected>📻 إذاعة القرآن الكريم من القاهرة</option>
-        <option value="tarateel">🎙️ تلاوات خاشعة منوعة</option>
-        <option value="roqiah">🛡️ إذاعة الرقية الشرعية</option>
-      </select>
-      <button class="btn btn-play" id="radioPlayBtn" onclick="toggleRadioPlay()" style="width:100%; padding:14px; border-radius:12px; font-size:1.05rem;">▶️ تشغيل الإذاعة</button>
-      <div id="radioStatusText" style="font-size:0.8rem; color:var(--text-muted); margin-top:8px; display:none;"></div>
-      <audio id="liveRadioAudio" preload="none" playsinline></audio>
     </div>
   </div>
 
@@ -436,9 +417,14 @@
   </div>
 
   <script>
+    // قائمة القراء الموسعة مع إضافة كبار المشايخ الجدد
     const reciters = [
       { name: "الشيخ خالد القحطاني", server: "https://server10.mp3quran.net/qht/" },
       { name: "الشيخ مشاري راشد العفاسي", server: "https://server8.mp3quran.net/afs/" },
+      { name: "الشيخ عبد الرحمن السديس", server: "https://server11.mp3quran.net/sds/" },
+      { name: "الشيخ صلاح بو خاطر", server: "https://server8.mp3quran.net/salah/" },
+      { name: "الشيخ إبراهيم الأخضر", server: "https://server6.mp3quran.net/akhbar/" },
+      { name: "الشيخ هاني الرفاعي", server: "https://server11.mp3quran.net/hani/" },
       { name: "الشيخ عبد الباسط عبد الصمد (مرتل)", server: "https://server7.mp3quran.net/basit/" },
       { name: "الشيخ محمود خليل الحصري", server: "https://server13.mp3quran.net/husr/" },
       { name: "الشيخ ماهر المعيقلي", server: "https://server12.mp3quran.net/maher/" },
@@ -465,29 +451,6 @@
       "القارعة", "التكاثر", "العصر", "الهمزة", "الفيل", "قريش", "الماعون", "الكوثر", "الكافرون", "النصر",
       "المسد", "الإخلاص", "الفلق", "الناس"
     ];
-
-    let nasheedRadioPlaying = false;
-    const nasheedRadioAudio = document.getElementById("nasheedRadioAudio");
-
-    function toggleNasheedRadio() {
-      const btn = document.getElementById("nasheedPlayBtn");
-      if (!nasheedRadioPlaying) {
-        if (audioPlayer && !audioPlayer.paused) audioPlayer.pause();
-        if (liveRadioAudio && !liveRadioAudio.paused) liveRadioAudio.pause();
-        nasheedRadioAudio.play().then(() => {
-          nasheedRadioPlaying = true;
-          btn.innerText = "⏸️ إيقاف البث";
-          btn.style.background = "#e74c3c";
-          btn.style.color = "#fff";
-        }).catch(() => alert("تعذر تشغيل بث الابتهالات حالياً."));
-      } else {
-        nasheedRadioAudio.pause();
-        nasheedRadioPlaying = false;
-        btn.innerText = "▶️ تشغيل بث الابتهالات";
-        btn.style.background = "";
-        btn.style.color = "";
-      }
-    }
 
     let currentSurahIndex = 0;
     let activeModalSurahId = 1;
@@ -823,8 +786,10 @@
       } catch (e) { resultsContainer.innerHTML = '<div>خطأ في الاتصال.</div>'; }
     }
 
+    // إعدادات الإذاعات المتعددة (تشمل القرآن، الابتهالات والتواشيح، التلاوات، والرقية)
     const radioStationsMap = {
       cairo: ["https://stream.radiojar.com/8s5u5tpdtwzuv", "https://n03.radiojar.com/8s5u5tpdtwzuv"],
+      nasheeed: ["https://backup.qurango.net/radio/tarateel", "https://stream.radiojar.com/8s5u5tpdtwzuv"],
       tarateel: ["https://backup.qurango.net/radio/tarateel"],
       roqiah: ["https://backup.qurango.net/radio/roqiah"]
     };
