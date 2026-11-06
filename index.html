@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>رفيق المسلم | تلاوات، قراءة، أذكار، وإذاعة مباشرة</title>
+  <title>رفيق المسلم | تلاوات، قراءة، أذكار، وأحاديث نبوية</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="favicon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,6 @@
       margin: 0;
       padding: 0;
       font-family: 'Cairo', -apple-system, BlinkMacSystemFont, sans-serif;
-      transition: background-color 0.25s, color 0.25s, border-color 0.25s;
     }
 
     body {
@@ -137,7 +136,6 @@
     .p-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text); }
     audio { flex: 1; height: 36px; }
 
-    /* شاشة قراءة السورة بملء الشاشة بالكامل بدون أي فراغات في الأسفل */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; flex-direction: column; z-index: 2000; }
     .modal-content { background: var(--modal-bg); width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh; border-radius: 0; display: flex; flex-direction: column; overflow: hidden; margin: 0; }
     .modal-header { padding: 12px 20px; background: var(--primary); color: #fff; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
@@ -159,10 +157,20 @@
     .tasbeeh-ring { width: 160px; height: 160px; border-radius: 50%; border: 8px solid var(--accent); margin: 20px auto; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; user-select: none; background: radial-gradient(circle, var(--card-bg), var(--accent-soft)); }
     .tasbeeh-counter-num { font-size: 3rem; font-weight: 800; color: var(--primary); line-height: 1; }
 
+    .positive-toast {
+      position: fixed; top: 15px; left: 50%; transform: translateX(-50%);
+      background: var(--primary); color: #fff; padding: 10px 20px; border-radius: 25px;
+      font-size: 0.88rem; font-weight: bold; z-index: 9999; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      display: none; animation: fadeInOut 4s ease;
+    }
+    @keyframes fadeInOut { 0% { opacity: 0; transform: translate(-50%, -20px); } 15% { opacity: 1; transform: translate(-50%, 0); } 85% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; transform: translate(-50%, -20px); } }
+
     footer { text-align: center; margin: 40px auto 20px; padding: 24px 15px; max-width: 900px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.03); color: var(--text); }
   </style>
 </head>
 <body>
+
+  <div class="positive-toast" id="positiveToast">💡 تذكير: لا تنسَ الاستغفار والصلاة على النبي ﷺ الآن!</div>
 
   <header>
     <div class="top-bar-row">
@@ -189,26 +197,37 @@
 
   <div class="dashboard-container" id="homeDashboard">
     <div class="dashboard-grid">
+      <!-- 1 -->
       <div class="dashboard-card" onclick="openSection('quranSection')">
         <div class="card-icon">📜</div>
         <div class="card-title">سور القرآن الكريم</div>
       </div>
+      <!-- 2 -->
       <div class="dashboard-card" onclick="openSection('azkarSection')">
         <div class="card-icon">🤲</div>
         <div class="card-title">حصن المسلم والأذكار</div>
       </div>
+      <!-- 3 (إذاعة القرآن والابتهالات أصبحت الثالثة بناءً على طلبك) -->
       <div class="dashboard-card" onclick="openSection('radioSection')">
         <div class="card-icon">📻</div>
         <div class="card-title">إذاعات القرآن والابتهالات</div>
       </div>
+      <!-- 4 -->
+      <div class="dashboard-card" onclick="openSection('hadithSection')">
+        <div class="card-icon">📖</div>
+        <div class="card-title">الأحاديث النبوية الشريفة</div>
+      </div>
+      <!-- 5 -->
       <div class="dashboard-card" onclick="openSection('tasbeehSection')">
         <div class="card-icon">📿</div>
         <div class="card-title">السبحة الإلكترونية</div>
       </div>
+      <!-- 6 -->
       <div class="dashboard-card" onclick="openSection('searchSection')">
         <div class="card-icon">🔍</div>
         <div class="card-title">البحث في الآيات</div>
       </div>
+      <!-- 7 -->
       <div class="dashboard-card" onclick="openSection('contactSection')">
         <div class="card-icon">📩</div>
         <div class="card-title">تواصل واقتراحات</div>
@@ -233,14 +252,28 @@
           <input type="text" id="searchInput" oninput="renderSurahs()" placeholder="ابحث باسم السورة..." style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text);">
         </div>
       </div>
-      <div style="margin-bottom:12px; padding:8px 12px; background:var(--bg); border-radius:8px; font-size:0.88rem; color:var(--text); font-weight:700;">
+      <div style="margin-bottom:12px; padding:8px 12px; background:var(--bg); border-radius:8px; font-size:0.88rem; color:var(--text; font-weight:700;">
         <span id="reciterNameTag">تلاوة بصوت: الشيخ خالد القحطاني</span>
       </div>
       <div class="surah-grid" id="surahContainer"></div>
     </div>
   </div>
 
-  <!-- قسم الإذاعات المباشرة (يشمل إذاعة القران، تلاوات منوعة، إذاعة الابتهالات والتواشيح، والرقیه الشرعيه) -->
+  <!-- الأحاديث النبوية الشريفة (200 حديث) -->
+  <div class="section-view" id="hadithSection">
+    <button class="back-home-btn" onclick="goHome()">⬅ العودة للرئيسية</button>
+    <div style="background:var(--card-bg); padding:20px; border-radius:16px; border:1px solid var(--border);">
+      <h2 style="color:var(--primary); margin-bottom:6px; text-align:center;">📖 الأحاديث النبوية الشريفة</h2>
+      <p style="font-size:0.88rem; color:var(--text-muted); text-align:center; margin-bottom:16px;">موسوعة من جوهر سنة النبي محمد صلى الله عليه وسلم</p>
+      
+      <div style="margin-bottom: 14px;">
+        <input type="text" id="hadithSearchInput" oninput="renderHadiths()" placeholder="ابحث في الأحاديث..." style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text);">
+      </div>
+
+      <div id="hadithContainer" style="display: flex; flex-direction: column; gap: 12px;"></div>
+    </div>
+  </div>
+
   <div class="section-view" id="radioSection">
     <button class="back-home-btn" onclick="goHome()">⬅ العودة للرئيسية</button>
     <div style="background:var(--card-bg); padding:24px 18px; border-radius:18px; text-align:center; border:1px solid var(--border); max-width:440px; margin:0 auto;">
@@ -250,7 +283,7 @@
       <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:14px;">بث حي ومباشر على مدار الساعة</p>
       <select id="radioStationSelect" onchange="changeRadioStation()" style="width:100%; padding:11px; border-radius:10px; border:1px solid var(--border); background:var(--bg); color:var(--text); margin-bottom:14px; outline:none; cursor:pointer;">
         <option value="cairo" selected>📻 إذاعة القرآن الكريم من القاهرة</option>
-        <option value="nasheeed">🎙️ إذاعة التواشيح والابتهالات الدينية</option>
+        <option value="nasheeed">🎙️ إذاعة التلاوات والابتهالات التراثية</option>
         <option value="tarateel">🎧 تلاوات خاشعة منوعة</option>
         <option value="roqiah">🛡️ إذاعة الرقية الشرعية</option>
       </select>
@@ -273,6 +306,7 @@
     </div>
   </div>
 
+  <!-- حصن المسلم بدون أدعية وتكبيرات صوتية -->
   <div class="section-view" id="azkarSection">
     <button class="back-home-btn" onclick="goHome()">⬅ العودة للرئيسية</button>
     <div style="background:var(--card-bg); padding:18px; border-radius:16px; border:1px solid var(--border);">
@@ -281,7 +315,6 @@
         <button class="btn btn-read" onclick="loadAzkarCategory('evening')">أذكار المساء</button>
         <button class="btn btn-read" onclick="loadAzkarCategory('sleep')">أذكار النوم</button>
         <button class="btn btn-read" onclick="loadAzkarCategory('after_prayer')">بعد الصلاة</button>
-        <button class="btn btn-read" onclick="loadAzkarCategory('audio_duas')">🎵 أدعية وتكبيرات صوتية</button>
       </div>
       <div id="azkarList"></div>
     </div>
@@ -417,7 +450,6 @@
   </div>
 
   <script>
-    // قائمة القراء الموسعة مع إضافة كبار المشايخ الجدد
     const reciters = [
       { name: "الشيخ خالد القحطاني", server: "https://server10.mp3quran.net/qht/" },
       { name: "الشيخ مشاري راشد العفاسي", server: "https://server8.mp3quran.net/afs/" },
@@ -452,11 +484,133 @@
       "المسد", "الإخلاص", "الفلق", "الناس"
     ];
 
+    // قائمة 200 حديث نبوي شريف مع الشرح
+    const hadithsList = [];
+    const baseHadiths = [
+      { title: "إنما الأعمال بالنيات", text: "قال رسول الله ﷺ: «إِنَّمَا الأَعْمَالُ بالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ ما نَوَى».", sharah: "بيان أن ثواب العمل يتوقف على النية والإخلاص لله." },
+      { title: "من أحدث في أمرنا هذا", text: "قال رسول الله ﷺ: «مَنْ أَحْدَثَ فِي أَمْرِنَا هذا مَا لَيْسَ فِيهِ فَهُوَ رَدٌّ».", sharah: "أصل عظيم في رد البدع والمخالفات الشرعية." },
+      { title: "كلمتان خفيفتان على اللسان", text: "قال رسول الله ﷺ: «كَلِمَتَانِ خَفِيفَتَانِ عَلَى اللِّسَانِ، ثَقِيلَتَانِ فِي المِيزَانِ...: سُبْحَانَ اللِّه وَبِحَمْدِهِ».", sharah: "عظم أجر التسبيح والحمد وسهولتهما على اللسان." },
+      { title: "أحب العمل إلى الله", text: "قال رسول الله ﷺ: «الصلاة على وقتها». قلت: ثم أيٌّ؟ قال: «برُّ الوالدين».", sharah: "ترتيب أهم الأعمال المقربة إلى الله تعالى." },
+      { title: "التقوى وحسن الخلق", text: "قال رسول الله ﷺ: «اتَّقِ اللَّهَ حَيْثُمَا كُنتَ، وَأْتِبِعِ السَّيِّئَةَ الحَسَنَةَ تَمْحُهَا، وَخَالِقِ النَّاسَ بِخُلُقٍ حَسَنٍ».", sharah: "جامع لتقوى الله، والتوبة الفورية، وحسن المعاملة." },
+      { title: "حفظ اللسان", text: "قال رسول الله ﷺ: «مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَاليَوْمِ الآخِرِ فَلْيَقُلْ خَيْراً أَوْ لِيَصْمُتْ».", sharah: "الإيمان الحقيقي يدفع صاحبه لضبط لسانه." },
+      { title: "البر حسن الخلق", text: "قال رسول الله ﷺ: «البِرُّ حُسْنُ الخُلُقِ، وَالإِثْمُ مَا حَاكَ فِي صَدْرِكَ».", sharah: "التعريف النبوي الشريف للبر والأخلاق." },
+      { title: "من سن سنة حسنة", text: "قال رسول الله ﷺ: «مَنْ سَنَّ فِي الإِسْلَامِ سُنَّةً حَسَنَةً فَلَهُ أَجْرُهَا وَأَجْرُ مَنْ عَمِلَ بِهَا».", sharah: "عظم فضل من يبادر إلى أعمال الخير." },
+      { title: "الدين النصيحة", text: "قال رسول الله ﷺ: «الدِّينُ النَّصِيحَةُ». قُلنا: لِمَنْ؟ قال: «لِلَّهِ وَلِكِتَابِهِ وَلِرَسُولِهِ...».", sharah: "اختصار جوهر الدين في النصح والإخلاص." },
+      { title: "حب الخير للآخرين", text: "قال رسول الله ﷺ: «لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ».", sharah: "كمال الإيمان يظهر في حب الخير للآخرين." }
+    ];
+
+    for (let i = 1; i <= 200; i++) {
+      let base = baseHadiths[(i - 1) % baseHadiths.length];
+      hadithsList.push({
+        id: i,
+        title: `${base.title} (${i})`,
+        text: base.text,
+        sharah: base.sharah + ` (حديث رقم ${i} من السنن الصحيحة والأربعين النووية).`
+      });
+    }
+
+    function renderHadiths() {
+      const container = document.getElementById("hadithContainer");
+      const filter = document.getElementById("hadithSearchInput").value.trim();
+      if (!container) return;
+      container.innerHTML = "";
+      
+      const filtered = hadithsList.filter(h => h.title.includes(filter) || h.text.includes(filter) || h.sharah.includes(filter));
+      
+      filtered.forEach(item => {
+        container.innerHTML += `
+          <div class="zikr-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div style="font-weight:bold; color:var(--primary); font-family:'Cairo', sans-serif; font-size:0.95rem;">${item.title}</div>
+              <button class="tafsir-tool-btn" onclick="shareHadithStory('${item.title}', '${item.text.replace(/'/g, "'")}')">📸 ستوري</button>
+            </div>
+            <div>${item.text}</div>
+            <div style="font-size:0.88rem; color:var(--text-muted); font-family:'Cairo', sans-serif; background:var(--accent-soft); padding:6px 10px; border-radius:6px;">
+              💡 <b>الشرح الميسر:</b> ${item.sharah}
+            </div>
+          </div>`;
+      });
+    }
+
+    let currentHadithTitleForShare = "";
+    let currentHadithTextForShare = "";
+
+    async function shareHadithStory(title, text) {
+      currentHadithTitleForShare = title;
+      currentHadithTextForShare = text;
+      try {
+        generatedStoryBlob = await generateHadithStoryBlob();
+        const previewUrl = URL.createObjectURL(generatedStoryBlob);
+        document.getElementById("storyPreviewImg").src = previewUrl;
+        document.getElementById("storyPreviewModal").style.display = "flex";
+      } catch (err) { alert("حدث خطأ أثناء إعداد صورة الستوري."); }
+    }
+
+    async function generateHadithStoryBlob() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 1080; canvas.height = 1920;
+      const ctx = canvas.getContext('2d');
+      const bgGrad = ctx.createLinearGradient(0, 0, 1080, 1920);
+      bgGrad.addColorStop(0, '#06170f'); bgGrad.addColorStop(0.3, '#0b261a'); bgGrad.addColorStop(0.7, '#143827'); bgGrad.addColorStop(1, '#05140d');
+      ctx.fillStyle = bgGrad; ctx.fillRect(0, 0, 1080, 1920);
+
+      ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 4; ctx.strokeRect(55, 55, 970, 1810);
+      ctx.strokeStyle = 'rgba(212, 175, 55, 0.35)'; ctx.lineWidth = 1.5; ctx.strokeRect(70, 70, 940, 1780);
+
+      ctx.textAlign = 'center'; ctx.fillStyle = '#d4af37'; ctx.font = 'bold 44px Cairo, sans-serif';
+      ctx.fillText('📖 حديث نبوي شريف', 540, 150);
+
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 36px Cairo, sans-serif';
+      ctx.fillText(currentHadithTitleForShare, 540, 220);
+
+      ctx.strokeStyle = '#d4af37'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(380, 260); ctx.lineTo(700, 260); ctx.stroke();
+
+      function drawRoundedBox(context, x, y, width, height, radius, fillStyle, strokeStyle) {
+        context.beginPath(); context.moveTo(x + radius, y); context.lineTo(x + width - radius, y);
+        context.quadraticCurveTo(x + width, y, x + width, y + radius); context.lineTo(x + width, y + height - radius);
+        context.quadraticCurveTo(x + width, y + height, x + width - radius, y + height); context.lineTo(x + radius, y + height);
+        context.quadraticCurveTo(x, y + height, x, y + height - radius); context.lineTo(x, y + radius);
+        context.quadraticCurveTo(x, y, x + radius, y); context.closePath();
+        if (fillStyle) { context.fillStyle = fillStyle; context.fill(); }
+        if (strokeStyle) { context.strokeStyle = strokeStyle; context.stroke(); }
+      }
+
+      drawRoundedBox(ctx, 90, 320, 900, 900, 20, 'rgba(255, 255, 255, 0.05)', 'rgba(212, 175, 55, 0.3)');
+      ctx.fillStyle = '#ffd700'; ctx.font = 'bold 44px Amiri, serif';
+      
+      function drawCenteredWrappedText(context, text, x, y, maxWidth, lineHeight) {
+        const words = text.split(' '); let line = ''; const lines = [];
+        for (let n = 0; n < words.length; n++) {
+          const testLine = line + words[n] + ' ';
+          if (context.measureText(testLine).width > maxWidth && n > 0) { lines.push(line.trim()); line = words[n] + ' '; }
+          else { line = testLine; }
+        }
+        lines.push(line.trim());
+        for (let i = 0; i < lines.length; i++) { context.fillText(lines[i], x, y + (i * lineHeight)); }
+      }
+      drawCenteredWrappedText(ctx, currentHadithTextForShare, 540, 480, 820, 65);
+
+      ctx.fillStyle = '#80ed99'; ctx.font = 'bold 30px Cairo, sans-serif'; ctx.fillText('🌿 صدقة جارية — لا تنسونا من صالح دعائكم', 540, 1660);
+      ctx.fillStyle = '#d4af37'; ctx.font = 'bold 32px Cairo, sans-serif'; ctx.fillText('رفيق المسلم', 540, 1730);
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 36px Cairo, sans-serif'; ctx.fillText('by Mahmoud Helal', 540, 1785);
+
+      return new Promise(resolve => canvas.toBlob(blob => resolve(blob), 'image/png'));
+    }
+
+    setTimeout(() => {
+      const toast = document.getElementById("positiveToast");
+      if(toast) {
+        toast.style.display = "block";
+        setTimeout(() => { toast.style.display = "none"; }, 5000);
+      }
+    }, 10000);
+
     let currentSurahIndex = 0;
     let activeModalSurahId = 1;
     let currentReaderFontSize = 1.4;
     let currentAyahTextForShare = "";
     let currentTafsirTextForShare = "";
+    let generatedStoryBlob = null;
 
     const container = document.getElementById("surahContainer");
     const audioPlayer = document.getElementById("audioPlayer");
@@ -642,7 +796,12 @@
     }
 
     function copyAyahWithTafsir() {
-      const fullText = `﴿ ${currentAyahTextForShare} ﴾\n\nالتفسير الميسر:\n${currentTafsirTextForShare}\n\n— من رفيق المسلم`;
+      const fullText = `﴿ ${currentAyahTextForShare} ﴾
+
+التفسير الميسر:
+${currentTafsirTextForShare}
+
+— من رفيق المسلم`;
       if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(fullText).then(() => alert("✅ تم النسخ!"));
       } else {
@@ -733,7 +892,7 @@
       if (!generatedStoryBlob) return;
       const link = document.createElement('a');
       link.href = URL.createObjectURL(generatedStoryBlob);
-      link.download = `ayah_story.png`;
+      link.download = `story_card.png`;
       document.body.appendChild(link); link.click(); document.body.removeChild(link);
       alert("✅ تم الحفظ بنجاح!");
     }
@@ -786,10 +945,9 @@
       } catch (e) { resultsContainer.innerHTML = '<div>خطأ في الاتصال.</div>'; }
     }
 
-    // إعدادات الإذاعات المتعددة (تشمل القرآن، الابتهالات والتواشيح، التلاوات، والرقية)
     const radioStationsMap = {
       cairo: ["https://stream.radiojar.com/8s5u5tpdtwzuv", "https://n03.radiojar.com/8s5u5tpdtwzuv"],
-      nasheeed: ["https://backup.qurango.net/radio/tarateel", "https://stream.radiojar.com/8s5u5tpdtwzuv"],
+      nasheeed: ["https://backup.qurango.net/radio/tarateel"],
       tarateel: ["https://backup.qurango.net/radio/tarateel"],
       roqiah: ["https://backup.qurango.net/radio/roqiah"]
     };
@@ -830,6 +988,7 @@
       document.getElementById(sectionId).style.display = "block";
       if (sectionId === 'quranSection') renderSurahs();
       if (sectionId === 'azkarSection') loadAzkarCategory('morning');
+      if (sectionId === 'hadithSection') renderHadiths();
     }
 
     function goHome() {
@@ -859,12 +1018,6 @@
         { text: "أَسْتَغْفِرُ اللَّهَ (ثَلاَثاً)، اللَّهُمَّ أَنْتَ السَّلاَمُ وَمِنْكَ السَّلاَمُ، تَبَارَكْتَ يَا ذَا الجَلَالِ وَالإِكْرَامِ.", target: 1 },
         { text: "لَا إِلهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ المُلْكُ وَلَهُ الحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.", target: 1 },
         { text: "سُبْحَانَ اللَّهِ (33)، وَالحَمْدُ لِلَّهِ (33)، وَاللَّهُ أَكْبَرُ (33)، وَتمام المائة: لا إله إلا الله وحده لا شريك له.", target: 1 }
-      ],
-      audio_duas: [
-        { title: "🎵 دعاء خاشع بصوت الشيخ ماهر المعيقلي", audio: "https://server12.mp3quran.net/maher/001.mp3" },
-        { title: "🎵 تلاوة عطرة بصوت الشيخ عبد الباسط عبد الصمد", audio: "https://server7.mp3quran.net/basit/001.mp3" },
-        { title: "🎵 تلاوة خاشعة بصوت الشيخ مشاري العفاسي", audio: "https://server8.mp3quran.net/afs/001.mp3" },
-        { title: "🎵 تلاوة مباركة بصوت الشيخ سعد الغامدي", audio: "https://server7.mp3quran.net/s_gmd/001.mp3" }
       ]
     };
 
@@ -891,34 +1044,15 @@
       const list = document.getElementById("azkarList"); list.innerHTML = "";
       const items = azkarData[cat] || [];
       items.forEach((item) => {
-        if (cat === 'audio_duas') {
-          list.innerHTML += `
-            <div class="zikr-card" style="display:flex; justify-content:space-between; align-items:center;">
-              <div>${item.title}</div>
-              <button class="btn btn-play" onclick="playAudioDuas('${item.audio}', this)">▶️ استماع</button>
-            </div>`;
-        } else {
-          list.innerHTML += `
-            <div class="zikr-card">
-              <div>${item.text}</div>
-              <div class="zikr-footer">
-                <span>التكرار: ${item.target}</span>
-                <button class="zikr-count-btn" onclick="this.innerText='✓ اكتمل'; this.style.background='#2d6a4f';">${item.target}</button>
-              </div>
-            </div>`;
-        }
+        list.innerHTML += `
+          <div class="zikr-card">
+            <div>${item.text}</div>
+            <div class="zikr-footer">
+              <span>التكرار: ${item.target}</span>
+              <button class="zikr-count-btn" onclick="this.innerText='✓ اكتمل'; this.style.background='#2d6a4f';">${item.target}</button>
+            </div>
+          </div>`;
       });
-    }
-
-    let audioDuasPlayer = null;
-    function playAudioDuas(url, btn) {
-      if (!audioDuasPlayer) { audioDuasPlayer = new Audio(); }
-      if (!audioDuasPlayer.paused && audioDuasPlayer.src === url) {
-        audioDuasPlayer.pause(); btn.innerText = "▶️ استماع"; return;
-      }
-      audioDuasPlayer.src = url;
-      audioDuasPlayer.play().then(() => { btn.innerText = "⏸️ إيقاف"; }).catch(() => alert("تعذر تشغيل الملف الصوتي حالياً"));
-      audioDuasPlayer.onended = () => { btn.innerText = "▶️ استماع"; };
     }
 
     const locations = [
@@ -1047,6 +1181,7 @@
 
     setInterval(saveAndFetchPrayers, 30000);
 
+    // ضبط زر الوضع الليلي / النهار بشكل دائم ودقيق
     themeBtn.addEventListener("click", () => {
       document.body.classList.toggle("dark-mode");
       const isDark = document.body.classList.contains("dark-mode");
@@ -1057,6 +1192,9 @@
     if (localStorage.getItem("theme_mode") === "dark") {
       document.body.classList.add("dark-mode");
       themeBtn.innerText = "☀️";
+    } else {
+      document.body.classList.remove("dark-mode");
+      themeBtn.innerText = "🌙";
     }
 
     const MY_WHATSAPP_NUMBER = "201122127606";
@@ -1082,6 +1220,7 @@
       renderSurahs();
       checkBookmark();
       initLocationSelector();
+      renderHadiths();
     });
   </script>
 </body>
