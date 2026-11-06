@@ -460,9 +460,11 @@
       "المسد", "الإخلاص", "الفلق", "الناس"
     ];
 
-    // ربط ملف الابتهال المرفوع مباشرة في مستودع GitHub الخاص بك بالاسم الصحيح
+    // استخدام الرابط الكامل والمباشر للملف من مستودع جيت هب الخاص بك
+    const repoUser = "mahmoudhelal310-dotcom";
+    const repoName = "rafeektest"; // اسم المستودع لديك
     const nasheedsList = [
-      { title: "🎙️ ابتهال للشيخ نصر الدين طوبار (جودة عالية)", url: "شريط للشيخ نصر الدين طوبار من اروع ما قدم جوده عاليه.mp3" }
+      { title: "🎙️ ابتهال للشيخ نصر الدين طوبار (جودة عالية)", url: `https://${repoUser}.github.io/${repoName}/tobhar.mp3` }
     ];
 
     function renderNasheeds() {
@@ -484,7 +486,7 @@
       if (audioPlayer && !audioPlayer.paused) audioPlayer.pause();
       if (liveRadioAudio && !liveRadioAudio.paused) liveRadioAudio.pause();
 
-      if (!currentNasheedAudio.paused && currentNasheedAudio.src.includes(encodeURI(url))) {
+      if (!currentNasheedAudio.paused && currentNasheedAudio.src === url) {
         currentNasheedAudio.pause();
         btn.innerText = "▶️ استماع";
         return;
@@ -494,7 +496,7 @@
       currentNasheedAudio.play().then(() => {
         document.querySelectorAll("#nasheedsContainer .btn-play").forEach(b => b.innerText = "▶️ استماع");
         btn.innerText = "⏸️ إيقاف";
-      }).catch(() => alert("تعذر تشغيل ملف الابتهال حالياً، تأكد من وجود الملف في نفس مجلد الـ index."));
+      }).catch(() => alert("جاري تفعيل الرابط، انتظر دقيقة حتى يقوم جيت هب بنشر الملف وتحديثه."));
 
       currentNasheedAudio.onended = () => { btn.innerText = "▶️ استماع"; };
     }
