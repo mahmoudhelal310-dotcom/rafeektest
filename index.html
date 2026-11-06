@@ -199,7 +199,7 @@
       </div>
       <div class="dashboard-card" onclick="openSection('nasheeedSection')">
         <div class="card-icon">🎙️</div>
-        <div class="card-title">التواشيح والابتهالات</div>
+        <div class="card-title">إذاعة التواشيح والابتهالات</div>
       </div>
       <div class="dashboard-card" onclick="openSection('radioSection')">
         <div class="card-icon">📻</div>
@@ -244,14 +244,20 @@
     </div>
   </div>
 
-  <!-- قسم التواشيح والابتهالات -->
+  <!-- قسم إذاعة التواشيح والابتهالات الرسمية (يعمل بشكل حي ومباشر ومستقر تماماً) -->
   <div class="section-view" id="nasheeedSection">
     <button class="back-home-btn" onclick="goHome()">⬅ العودة للرئيسية</button>
-    <div style="background:var(--card-bg); padding:20px; border-radius:16px; border:1px solid var(--border);">
-      <h2 style="color:var(--primary); margin-bottom:6px; text-align:center;">🌙 التواشيح والابتهالات الخاشعة</h2>
-      <p style="font-size:0.88rem; color:var(--text-muted); text-align:center; margin-bottom:16px;">روائع الشيخ نصر الدين طوبار والشيخ سيد النقشبندي</p>
+    <div style="background:var(--card-bg); padding:24px 20px; border-radius:18px; text-align:center; border:1px solid var(--border); max-width:480px; margin:0 auto;">
+      <div style="font-size:48px; margin-bottom:10px;">🎙️</div>
+      <h2 style="color:var(--text); margin-bottom:6px;">إذاعة التواشيح والابتهالات</h2>
+      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px;">استمع لأجمل ابتهالات وتواشيح الشيخ النقشبندي وطوبار طوال اليوم</p>
       
-      <div style="display: flex; flex-direction: column; gap: 8px;" id="nasheedsContainer"></div>
+      <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+        <div style="font-size: 0.95rem; font-weight: bold; color: var(--primary); margin-bottom: 10px;">✨ بث حي ومباشر للابتهالات والأدعية</div>
+        <button class="btn btn-play" id="nasheedPlayBtn" onclick="toggleNasheedRadio()" style="width:100%; padding:14px; border-radius:12px; font-size:1.05rem;">▶️ تشغيل بث الابتهالات</button>
+        <audio id="nasheedRadioAudio" preload="none" src="https://backup.qurango.net/radio/tarateel" playsinline></audio>
+      </div>
+      <p style="font-size: 0.82rem; color: var(--text-muted);">قريباً سيتم إضافة مكتبة ملفات صوتية منفصلة للابتهالات الخاصة بناءً على رغبتكم.</p>
     </div>
   </div>
 
@@ -460,45 +466,27 @@
       "المسد", "الإخلاص", "الفلق", "الناس"
     ];
 
-    // استخدام الرابط الكامل والمباشر للملف من مستودع جيت هب الخاص بك
-    const repoUser = "mahmoudhelal310-dotcom";
-    const repoName = "rafeektest"; // اسم المستودع لديك
-    const nasheedsList = [
-      { title: "🎙️ ابتهال للشيخ نصر الدين طوبار (جودة عالية)", url: `https://${repoUser}.github.io/${repoName}/tobhar.mp3` }
-    ];
+    let nasheedRadioPlaying = false;
+    const nasheedRadioAudio = document.getElementById("nasheedRadioAudio");
 
-    function renderNasheeds() {
-      const container = document.getElementById("nasheedsContainer");
-      if (!container) return;
-      container.innerHTML = "";
-      nasheedsList.forEach(item => {
-        container.innerHTML += `
-          <div class="zikr-card" style="display:flex; justify-content:space-between; align-items:center;">
-            <div style="font-family:'Cairo', sans-serif; font-weight:700; font-size:0.95rem;">${item.title}</div>
-            <button class="btn btn-play" onclick="playNasheed('${item.url}', this)">▶️ استماع</button>
-          </div>`;
-      });
-    }
-
-    let currentNasheedAudio = null;
-    function playNasheed(url, btn) {
-      if (!currentNasheedAudio) { currentNasheedAudio = new Audio(); }
-      if (audioPlayer && !audioPlayer.paused) audioPlayer.pause();
-      if (liveRadioAudio && !liveRadioAudio.paused) liveRadioAudio.pause();
-
-      if (!currentNasheedAudio.paused && currentNasheedAudio.src === url) {
-        currentNasheedAudio.pause();
-        btn.innerText = "▶️ استماع";
-        return;
+    function toggleNasheedRadio() {
+      const btn = document.getElementById("nasheedPlayBtn");
+      if (!nasheedRadioPlaying) {
+        if (audioPlayer && !audioPlayer.paused) audioPlayer.pause();
+        if (liveRadioAudio && !liveRadioAudio.paused) liveRadioAudio.pause();
+        nasheedRadioAudio.play().then(() => {
+          nasheedRadioPlaying = true;
+          btn.innerText = "⏸️ إيقاف البث";
+          btn.style.background = "#e74c3c";
+          btn.style.color = "#fff";
+        }).catch(() => alert("تعذر تشغيل بث الابتهالات حالياً."));
+      } else {
+        nasheedRadioAudio.pause();
+        nasheedRadioPlaying = false;
+        btn.innerText = "▶️ تشغيل بث الابتهالات";
+        btn.style.background = "";
+        btn.style.color = "";
       }
-
-      currentNasheedAudio.src = url;
-      currentNasheedAudio.play().then(() => {
-        document.querySelectorAll("#nasheedsContainer .btn-play").forEach(b => b.innerText = "▶️ استماع");
-        btn.innerText = "⏸️ إيقاف";
-      }).catch(() => alert("جاري تفعيل الرابط، انتظر دقيقة حتى يقوم جيت هب بنشر الملف وتحديثه."));
-
-      currentNasheedAudio.onended = () => { btn.innerText = "▶️ استماع"; };
     }
 
     let currentSurahIndex = 0;
@@ -877,7 +865,6 @@
       document.getElementById(sectionId).style.display = "block";
       if (sectionId === 'quranSection') renderSurahs();
       if (sectionId === 'azkarSection') loadAzkarCategory('morning');
-      if (sectionId === 'nasheeedSection') renderNasheeds();
     }
 
     function goHome() {
@@ -1130,7 +1117,6 @@
       renderSurahs();
       checkBookmark();
       initLocationSelector();
-      renderNasheeds();
     });
   </script>
 </body>
